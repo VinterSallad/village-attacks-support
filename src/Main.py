@@ -4,7 +4,7 @@ import random
 
 # Plays sound to players to notify action
 def play_notification_sound():
-    playsound('notification.wav')
+    playsound('../sound/notification.wav')
 
 
 # Prints a string in a formatted format
@@ -46,25 +46,44 @@ def throw_dices():
 
 
 #
-def monster_phase():
+def game_partition(string):
     play_notification_sound()
-    print_big("Coin to starting player")
+    print_big(string)
+    input()
+
+
+#
+def monster_phase():
+    game_partition("Coin to first player")
+
+    game_partition("First player go, don't forget Reserve!")
+    game_partition("Second player go, don't forget Reserve!")
+    game_partition("Third player go, don't forget Reserve!")
 
 
 #
 def villager_phase():
-    play_notification_sound()
+    game_partition("Villager event")
+
+    game_partition("Villager attacks & moves")
 
 
 #
 def cleanup_phase():
-    play_notification_sound()
+    game_partition("Traps are activated")
+    game_partition("New villagers are summoned")
+    game_partition("Draw new trap")
+    game_partition("Cleanup")
 
 
 # MAIN
 # GAME LOOP
+
+i = 1
+
 while True:
-    user = input()
+
+    user = input("Round " + str(i) + " starts")
 
     if user == "stop":
         break
@@ -72,3 +91,7 @@ while True:
         monster_phase()
         villager_phase()
         cleanup_phase()
+
+    input("Round " + str(i) + " ends")
+
+    i += 1
