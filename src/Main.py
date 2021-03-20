@@ -97,13 +97,25 @@ def throw_dices():
 #
 #     i += 1
 
-layout = [[sg.Button('Proceed'), sg.Button('Flip'), sg.Button('Roll')],
-          [sg.Input('', key='-STATUS-', readonly=True)],
-          [sg.Input('', key='-COIN-', readonly=True)]]
+startLayout = [[]]
 
+layout = [[sg.Button('Proceed'), sg.Button('Flip Coin'), sg.Button('Get Type'), sg.Button('Troll'), sg.Button('Reset')],
+          [sg.Input('', key='-STATUS-', readonly=True)],
+          [sg.Input('', key='-COIN-', readonly=True)],
+          [sg.Input('', key='-TYPE-', readonly=True)],
+          [sg.Input('', key='-TROLL-', readonly=True)],
+          [sg.OptionMenu(['Day', 'Night'], default_value='Select Starting Time', size=(17, 5))]]
+
+# Starting Theme
+sg.theme('BlueMono')
+# Day Theme
+#sg.theme('Reddit')
+# Night Theme
+#sg.theme('DarkBlue')
 window = sg.Window('Village Attacks Tool', layout)
 
 stage = 0
+day = True
 
 while True:
     event, values = window.read()
@@ -111,6 +123,7 @@ while True:
     if event == sg.WINDOW_CLOSED:
         break
 
+    # STATUS
     if event == 'Proceed':
         stage += 1
         if stage == 1:
@@ -130,10 +143,35 @@ while True:
         elif stage == 8:
             window.Element('-STATUS-').Update('Cleanup')
             stage = 0
-    elif event == 'Flip':
+    # COIN
+    elif event == 'Flip Coin':
         if random.randint(1, 2) == 1:
             window.Element('-COIN-').Update('Heads')
         else:
             window.Element('-COIN-').Update('Tails')
+    # TYPE
+    elif event == 'Get Type':
+        unit = random.randint(1, 6)
+        if unit == 1:
+            window.Element('-TYPE-').Update('Red Type')
+        elif unit == 2:
+            window.Element('-TYPE-').Update('Blue Type')
+        elif unit == 3:
+            window.Element('-TYPE-').Update('Green Type')
+        elif unit == 4:
+            window.Element('-TYPE-').Update('Purple Type')
+        elif unit == 5:
+            window.Element('-TYPE-').Update('Yellow Type')
+        elif unit == 6:
+            window.Element('-TYPE-').Update('Rainbow Type')
+    # TROLL
+    elif event == 'Troll':
+        unit = random.randint(1, 3)
+        if unit == 1:
+            window.Element('-TROLL-').Update("Troll rampages")
+        elif unit == 2:
+            window.Element('-TROLL-').Update("Troll attacks monsters")
+        elif unit == 3:
+            window.Element('-TROLL-').Update("Troll attacks villagers")
 
 window.close()
